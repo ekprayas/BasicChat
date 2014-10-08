@@ -60,6 +60,27 @@ function ClientServerOperationsHandler(ch, m){
 		}
 	};
 	
+	/** 
+	 * Send Username and get score.  
+	 * the callback should take a string, 
+	 * which is the latest version of the model
+	 * 
+	 *  This method is called on login and it will register user to server
+	 */
+	ClientServerOperationsHandler.prototype.getUserScore = function(username){
+
+		try{
+			var params = escape("userName")+ "=" + escape(username);
+			var url = "/BasicChatApplication/SentimentScoreServlet?" + params;
+			this.ajax.onreadystatechange = handleMessage;
+			this.ajax.open("GET",url,true); //true means async, which is the safest way to do it
+			this.ajax.send(null);
+			
+		}catch(e){
+			alert(e);
+		}
+	};
+	
 	/**
 	 * If any message to be send to the server call this method to send the message
 	 * note :all the messages 
@@ -201,7 +222,7 @@ function onMessageReceive(model){
 		break;
 		case NEWUSER :
 					  
-					  $(".onlineUsersUL").append("<li><img class='onlineGreen' src='../images/onlineGreen.png'><a style='float:left;' href='#'>"+messages[1]+"</a></li>");
+					  $(".onlineUsersUL").append("<li><img class='onlineGreen' src='../images/emotions/spiderman.png'><a style='float:left;' href='#'>"+messages[1]+"</a></li>");
 					  //;("Added New User is: "+messages[1]);
 					  	
 					  setSelectFriendEvent();

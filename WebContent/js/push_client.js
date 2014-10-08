@@ -7,6 +7,7 @@ CHATMESSAGE = "chatmessage";//message format is : chatmessage#from#to#message=me
 NEWUSER = "newuser";//newuser#username
 GROUPCHATMESSAGE="groupchatmessage";
 ERRORMESSAGE="error";
+SENSCORE="senscore";
 
 
 var clientServerOperations ;
