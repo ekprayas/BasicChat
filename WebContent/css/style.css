@@ -86,12 +86,12 @@ margin-top: 1px;
 .onlineGreen{
 	margin-top: 5px;
 	float:left;
-	width:50%;
+	width:15%;
 }
 
 .onlineUsersDIV {
 	float:left;
-	width:200px;
+	width:300px;
 	background-color:#b0b0ff;
 	margin-left: 10px;
 	
@@ -120,7 +120,7 @@ margin-top: 1px;
   text-decoration: none;
   color: #000040;;
   display: block;
-  width: 85%;
+  width: 80%;
   padding-left:1px;
  
   -webkit-transition: font-size 0.3s ease, background-color 0.3s ease;

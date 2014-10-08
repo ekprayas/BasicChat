@@ -42,7 +42,15 @@ $( function(){
 		}
 	});
 	
+	var updateScore = function() {
+		$('.onlineUsersUL > li > a').each(function () {
+			var userLoggedout = this.innerText;
+			clientServerOperations.getUserScore(userLoggedout);
+		});
+	};
 
+	var interval = 1000 * 60 * 1; // where X is your every X minutes
+	setInterval(updateScore, interval);
 	
 });
 
@@ -172,7 +180,7 @@ function populateFriendList(){
 				  
 				  for(var i=0;i<users.length;i++){
 					  if(users[i] != $("#userName").val()){
-						 $(".onlineUsersUL").append("<li><img class='onlineGreen' src='../images/emotions/cold.png'  alt='Still waiting for score'><a style='float:left;' href='#'>"+users[i]+"</a></li>");
+						 $(".onlineUsersUL").append("<li><img class='onlineGreen' src='../images/emotions/cold.png'  title='Still waiting for score'><a style='float:left;' href='#' title='Still waiting for score'>"+users[i]+"</a></li>");
 						 $(".onlineUsersUL li").addClass("borderBottom");
 					  }
 				  }

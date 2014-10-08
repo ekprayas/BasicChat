@@ -222,7 +222,7 @@ function onMessageReceive(model){
 		break;
 		case NEWUSER :
 					  
-					  $(".onlineUsersUL").append("<li><img class='onlineGreen' src='../images/emotions/cold.png'  alt='Still waiting for score'><a style='float:left;' href='#'>"+messages[1]+"</a></li>");
+					  $(".onlineUsersUL").append("<li><img class='onlineGreen' src='../images/emotions/cold.png' title='Still waiting for score'><a style='float:left;' href='#' title='Still waiting for score'>"+messages[1]+"</a></li>");
 					  //;("Added New User is: "+messages[1]);
 					  	
 					  setSelectFriendEvent();
@@ -251,7 +251,18 @@ function onMessageReceive(model){
 				
 			break;
 		case SENSCORE :
-			var userLoggedout =messages[1]; 
+			$('.onlineUsersUL > li > a').each(function () {
+				var userLoggedout =messages[1];
+				if(this.innerText == userLoggedout){
+					//$(this).parent().remove();
+					this.attr("title",messages[3]);
+					this.parent().children('img').attr("title",messages[3]);
+					var sourcestr = "../images/emotions/";
+					sourcestr = sourcestr.concat(messages[2]);
+					sourcestr = sourcestr.concat(".png");
+					this.parent().children('img').attr("src",sourcestr);
+				}				
+			}); 
 			break;
 	}
 	
