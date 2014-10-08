@@ -172,7 +172,7 @@ function populateFriendList(){
 				  
 				  for(var i=0;i<users.length;i++){
 					  if(users[i] != $("#userName").val()){
-						 $(".onlineUsersUL").append("<li><img class='onlineGreen' src='../images/onlineGreen.png'><a style='float:left;' href='#'>"+users[i]+"</a></li>");
+						 $(".onlineUsersUL").append("<li><img class='onlineGreen' src='../images/cold.png'  alt='Still waiting for score !!!'><a style='float:left;' href='#'>"+users[i]+"</a></li>");
 						 $(".onlineUsersUL li").addClass("borderBottom");
 					  }
 				  }
