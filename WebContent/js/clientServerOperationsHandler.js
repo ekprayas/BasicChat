@@ -222,7 +222,7 @@ function onMessageReceive(model){
 		break;
 		case NEWUSER :
 					  
-					  $(".onlineUsersUL").append("<li><img class='onlineGreen' src='../images/emotions/cold.png'  alt='Still waiting for score !!!' ><a style='float:left;' href='#'>"+messages[1]+"</a></li>");
+					  $(".onlineUsersUL").append("<li><img class='onlineGreen' src='../images/emotions/cold.png'  alt='Still waiting for score'><a style='float:left;' href='#'>"+messages[1]+"</a></li>");
 					  //;("Added New User is: "+messages[1]);
 					  	
 					  setSelectFriendEvent();
