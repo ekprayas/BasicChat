@@ -34,7 +34,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.chatapp.common.Message;
 import org.chatapp.constants.AppConstatns;
+import org.chatapp.producer.MessageEventHandler;
 import org.chatapp.useroperation.Client;
 
 @WebServlet(name = "publishServlet", urlPatterns = { "/publish" }, asyncSupported = true)
@@ -93,6 +95,14 @@ public class MessagePublisherServlet extends HttpServlet {
 				String msgType =uNameMsg[0];
 				String msgFromUser =uNameMsg[1];
 				String userNameToSend =uNameMsg[2];
+				
+				Message message = new Message();
+				message.setFrom(msgFromUser);
+				message.setTo(userNameToSend);
+				//message.setMessage(msgFromUser);
+				
+//				MessageEventHandler handler = new MessageEventHandler();
+//				handler.handleEvents(message);
 				
 				
 				//chatmessage#from#to#message=message
