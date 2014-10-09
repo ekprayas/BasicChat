@@ -42,16 +42,6 @@ $( function(){
 		}
 	});
 	
-	var updateScore = function() {
-		$('.onlineUsersUL > li > a').each(function () {
-			var userLoggedout = this.innerText;
-			clientServerOperations.getUserScore(userLoggedout);
-		});
-	};
-
-	var interval = 1000 * 60 * 1; // where X is your every X minutes
-	setInterval(updateScore, interval);
-	
 });
 
 function loginUser(){

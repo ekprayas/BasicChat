@@ -60,26 +60,7 @@ function ClientServerOperationsHandler(ch, m){
 		}
 	};
 	
-	/** 
-	 * Send Username and get score.  
-	 * the callback should take a string, 
-	 * which is the latest version of the model
-	 * 
-	 *  This method is called on login and it will register user to server
-	 */
-	ClientServerOperationsHandler.prototype.getUserScore = function(username){
-
-		try{
-			var params = escape("userName")+ "=" + escape(username);
-			var url = "/BasicChatApplication/SentimentScoreServlet?" + params;
-			this.ajax.onreadystatechange = handleMessage;
-			this.ajax.open("GET",url,true); //true means async, which is the safest way to do it
-			this.ajax.send(null);
-			
-		}catch(e){
-			alert(e);
-		}
-	};
+	
 	
 	/**
 	 * If any message to be send to the server call this method to send the message
@@ -304,3 +285,49 @@ $(window).blur(function () {
     window_focused =false;
 });
 
+/** 
+ * Send Username and get score.  
+ * the callback should take a string, 
+ * which is the latest version of the model
+ * 
+ *  This method is called on login and it will register user to server
+ */
+var getUserScore = function(username){
+	var params = escape("userName")+ "=" + escape(username);
+	var url = "/BasicChatApplication/SentimentScoreServlet?" + params;
+	$.ajax({
+		url: url,
+		type: 'GET',
+		success: function(data) {
+			//called when successful
+			var messages = data.split("#");
+			$('.onlineUsersUL > li > a').each(function () {
+				var userLoggedout =messages[1];
+				if(this.innerText == userLoggedout){
+					//$(this).parent().remove();
+					this.setAttribute("title",messages[3]);
+					this.parentNode.childNodes[0].setAttribute("title",messages[3]);
+					var sourcestr = "../images/emotions/";
+					sourcestr = sourcestr.concat(messages[2]);
+					sourcestr = sourcestr.concat(".png");
+					this.parentNode.childNodes[0].setAttribute("src",sourcestr);
+				} 
+			}); 
+		},
+		error: function(e) {
+			//called when there is an error
+			console.log(e.message);
+		}
+	});
+};
+
+
+var updateScore = function() {
+	$('.onlineUsersUL > li > a').each(function () {
+		var userLoggedout = this.innerText;
+		getUserScore(userLoggedout);
+	});
+};
+
+var interval = 1000 * 60 * 1; // where X is your every X minutes
+setInterval(updateScore, interval);
