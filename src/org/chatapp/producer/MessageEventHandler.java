@@ -1,59 +1,70 @@
 package org.chatapp.producer;
 
 import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import kafka.javaapi.producer.Producer;
 import kafka.producer.KeyedMessage;
+import kafka.producer.ProducerConfig;
 
 import org.chatapp.common.Message;
 
+import scala.reflect.generic.Trees.This;
+
 public class MessageEventHandler implements  Runnable {
 
-    private Producer<Integer, Object> producer;
+	
+    private static MessageEventHandler eventHandler = new MessageEventHandler();
+	private Producer<String, String> producer;
     private String topic;
-    private ConcurrentLinkedQueue<Message> eventQ;
+    private ConcurrentLinkedQueue<String> eventQ;
     private boolean initialized;
 
+    public static MessageEventHandler getInstance()
+    {
+    	return eventHandler;
+    }
     public MessageEventHandler() {
+    	init();
     }
 
     public void init() {
         if (initialized)
             return;
-        this.eventQ = new ConcurrentLinkedQueue<Message>();
+        this.eventQ = new ConcurrentLinkedQueue<String>();
         new Thread(this, MessageEventHandler.class.getName()).start();
         initialized = true;
 
     }
 
     public void initProducer() {
-//        Properties props = new Properties();
-//        props.put("zk.connect", getNodeConfigManager()
-//            .getProperty("zk_connect"));
-//        props.put("metadata.broker.list",
-//            getNodeConfigManager().getProperty("metadata_broker_list"));
-//        props.put("serializer.class",
-//            getNodeConfigManager().getProperty("serializer_class"));
-//        props.put("partitioner.class",
-//            getNodeConfigManager().getProperty("partitioner_class"));
-//        ProducerConfig config = new ProducerConfig(props);
-//        getLogger().info("Initializing kafka with " + props);
-//        producer = new Producer<Integer, Object>(config);
-//        this.topic = getNodeConfigManager().getProperty("kafka_topic");
+        Properties props = new Properties();
+        props.put("zk.connect", "10.106.6.39:2181");
+        props.put("metadata.broker.list",
+        		"10.106.6.39:9092");
+        props.put("serializer.class",
+        		"kafka.serializer.StringEncoder");
+        props.put("partitioner.class", "org.chatapp.producer.RandomPartitioner");
+        System.out.println("Broker:" + props.get("metadata.broker.list"));
+        ProducerConfig config = new ProducerConfig(props);
+        System.out.println("Broker:" + props.get("metadata.broker.list"));
+        System.out.println("Initializing kafka with " + props);
+        producer = new Producer<String, String>(config);
+        this.topic = "messages";
 
     }
 
       
-    public void handleEvents(Message event) {
-        eventQ.offer(event);
+    public void handleEvents(String chatString) {
+        eventQ.offer(chatString);
     }
 
-    public Message getEventFromQueue() {
+    public String getEventFromQueue() {
         return eventQ.poll();
     }
 
-    public void handleFailedEvents(Message event) {
+    public void handleFailedEvents(String event) {
         //getBean(EventManager.class).notifyFailedEvent(event);
     }
 
@@ -66,7 +77,7 @@ public class MessageEventHandler implements  Runnable {
     public void run() {
         while (true) {
             if (!eventQ.isEmpty()) {
-            	Message event = getEventFromQueue();
+            	String event = getEventFromQueue();
                 if (!send(event, topic))
                     handleFailedEvents(event);
             } else {
@@ -80,31 +91,26 @@ public class MessageEventHandler implements  Runnable {
 
     }
 
-    public boolean send(List<Message> events, String topic) {
+  /*  public boolean send(List<String> events, String topic) {
         try {
             if (topic == null) {
                 getProducer();
                 topic = topic == null ? this.topic : topic;
             }
             getProducer().send(
-                new KeyedMessage<Integer, Object>(topic, 0, events));
+                new KeyedMessage<String, String>(topic, events));
             return true;
         } catch (Exception e) {
             return false;
         }
-    }
+    }*/
 
-    public boolean send(Message event, String topic) {
+    public boolean send(String message, String topic) {
         try {
-            if (topic == null) {
-                getProducer();
-                topic = topic == null ? this.topic : topic;
-            }
             getProducer().send(
-                new KeyedMessage<Integer, Object>(topic, 0, event));
+                new KeyedMessage<String, String>(topic, "0", message));
             return true;
         } catch (Exception e) {
-            
             return false;
         }
     }
@@ -113,7 +119,7 @@ public class MessageEventHandler implements  Runnable {
     /**
      * @return the producer
      */
-    public Producer<Integer, Object> getProducer() {
+    public Producer<String, String> getProducer() {
         if (producer == null)
             initProducer();
         return producer;
@@ -123,7 +129,7 @@ public class MessageEventHandler implements  Runnable {
      * @param producer
      *            the producer to set
      */
-    public void setProducer(Producer<Integer, Object> producer) {
+    public void setProducer(Producer<String, String> producer) {
         this.producer = producer;
     }
 

@@ -126,4 +126,45 @@ public class SentimentScore implements Serializable{
         this.fear = fear;
     }
 
+	@Override
+	public String toString() {
+		String maxEmotion = "happiness";
+		double maxScore = happiness;
+		
+		if(maxScore < sadness)
+		{
+			maxScore = sadness; 
+			maxEmotion = "sadness";
+		}
+		if(maxScore < anger)
+		{
+			maxScore = anger; 
+			maxEmotion = "anger";
+		}
+		if(maxScore < disgust)
+		{
+			maxScore = disgust; 
+			maxEmotion = "disgust";
+		}
+		if(maxScore < fear)
+		{
+			maxScore = fear; 
+			maxEmotion = "fear";
+		}
+		if(maxScore < surprise)
+		{
+			maxScore = surprise; 
+			maxEmotion = "surprise";
+		}
+		
+					
+		return user + "#" 
+		+ maxEmotion+"#"
+		+"happiness:" + happiness
+		+"|anger:" + anger
+		+"|disgust:" + disgust
+		+"|fear:" + fear
+		+"|sadness:" + sadness
+		+"|surprise:" + surprise;
+	}
 }

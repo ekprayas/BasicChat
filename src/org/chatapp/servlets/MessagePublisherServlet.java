@@ -96,13 +96,12 @@ public class MessagePublisherServlet extends HttpServlet {
 				String msgFromUser =uNameMsg[1];
 				String userNameToSend =uNameMsg[2];
 				
-				Message message = new Message();
+				/*Message message = new Message();
 				message.setFrom(msgFromUser);
 				message.setTo(userNameToSend);
-				//message.setMessage(msgFromUser);
+				message.setMessage(msgFromUser);*/
 				
-//				MessageEventHandler handler = new MessageEventHandler();
-//				handler.handleEvents(message);
+				MessageEventHandler.getInstance().handleEvents(msg);
 				
 				
 				//chatmessage#from#to#message=message

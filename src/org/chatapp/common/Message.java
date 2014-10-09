@@ -2,6 +2,7 @@ package org.chatapp.common;
 
 import java.io.Serializable;
 
+@Deprecated
 public class Message implements Serializable{
 
     
