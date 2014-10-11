@@ -167,4 +167,17 @@ public class SentimentScore implements Serializable{
 		+"|sadness:" + sadness
 		+"|surprise:" + surprise;
 	}
+
+	public SentimentScore addScore(SentimentScore score) {
+		SentimentScore addedScore = new SentimentScore();
+		addedScore.user = this.user;
+		addedScore.happiness = this.happiness + score.happiness;
+		addedScore.anger = this.anger + score.anger;
+		addedScore.disgust = this.disgust + score.disgust;
+		addedScore.fear = this.fear + score.fear;
+		addedScore.sadness = this.sadness + score.sadness;
+		addedScore.surprise = this.surprise + score.surprise;
+		
+		return addedScore;
+	}
 }

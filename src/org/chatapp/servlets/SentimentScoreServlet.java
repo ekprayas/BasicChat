@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.chatapp.common.SentimentScore;
+import org.chatapp.common.SentimentStore;
 
 /**
  * Servlet implementation class SentimentScoreServlet
@@ -30,9 +31,12 @@ public class SentimentScoreServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String username = request.getParameter("userName");
-		SentimentScore senScore = new SentimentScore();
-		senScore.setUser(username);
-		senScore.setAnger(30.0);
+		SentimentScore senScore = SentimentStore.getInstance().getSentimentStoreMap(username);
+		
+		if(senScore == null) {
+			senScore = new SentimentScore();
+			senScore.setUser(username);
+		}
 		response.setContentType("text/plain");  
 		response.setCharacterEncoding("UTF-8"); 
 		response.getWriter().write("senscore#" + senScore.toString());

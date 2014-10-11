@@ -36,6 +36,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.chatapp.common.Message;
 import org.chatapp.constants.AppConstatns;
+import org.chatapp.consumer.SentimentConsumerGroup;
 import org.chatapp.producer.MessageEventHandler;
 import org.chatapp.useroperation.Client;
 
@@ -101,8 +102,12 @@ public class MessagePublisherServlet extends HttpServlet {
 				message.setTo(userNameToSend);
 				message.setMessage(msgFromUser);*/
 				
+				//Producer
 				MessageEventHandler.getInstance().handleEvents(msg);
 				
+
+				//Invoking the Consumer start
+				SentimentConsumerGroup.getInstance();
 				
 				//chatmessage#from#to#message=message
 				//keep a list of failed subscribers so we can remove them at the end
@@ -170,5 +175,6 @@ public class MessagePublisherServlet extends HttpServlet {
 
 		//start the async processing (using a pool controlled by the container)
 		publisherAsyncCtx.start(r);
+		
 	}
 }
