@@ -31,11 +31,22 @@ public class SentimentScoreServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String username = request.getParameter("userName");
-		SentimentScore senScore = SentimentStore.getInstance().getSentimentStoreMap(username);
+		String from = request.getParameter("from");
+		String to = request.getParameter("to");
+		
+		SentimentScore senScore = null;
+		if(username != null)
+		{
+			senScore = SentimentStore.getInstance().getSentimentStoreMap(username);
+		}
+		else
+		{
+			senScore = SentimentStore.getInstance().getPairSentimentStoreMap(from, to);
+		}
 		
 		if(senScore == null) {
 			senScore = new SentimentScore();
-			senScore.setUser(username);
+			senScore.setFrom(username);
 		}
 		response.setContentType("text/plain");  
 		response.setCharacterEncoding("UTF-8"); 

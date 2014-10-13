@@ -41,6 +41,7 @@ public class SentimentConsumer implements Runnable {
             SentimentScore score = (SentimentScore) obj;
             System.out.println("Score recieved: " + score.toString());
             SentimentStore.getInstance().updateSentimentStoreMap(score);
+            SentimentStore.getInstance().updatePairSentimentStoreMap(score);
 
         }
         System.out.println("Shutting down Thread: " + m_threadNumber);

@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Chat Application</title>
+<title>How is your mood?</title>
 
 <script language="Javascript">//below are the constants defined for the message type
 	CHATMESSAGE = "chatmessage";//message format is : chatmessage#from#to#message=message
@@ -20,7 +20,7 @@
 
 </head>
 <body>
-<h1>Chat Application</h1>
+<h1>How is your mood?</h1>
 
 <img  src="../images/pageBackground.png" id="background-image" />
 <img  src="../images/header_background.jpg" id="header-image" />
@@ -39,7 +39,9 @@
 <div  class="container" >
 	<div class="onlineUsersDIV" >
 		<div class="boxTitle"><b>List of Online Users :</b></div>
+	
 		<ul class="onlineUsersUL"></ul><!-- This will hold all the online users -->
+	
 	</div>
 	<div class="groupChat">
 		<div class="boxTitle" ><b>Group chat here:</b></div>

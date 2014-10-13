@@ -27,7 +27,7 @@ public class SentimentConsumerGroup {
     	if(sentimentConsumerGroup == null)
     	{
     		sentimentConsumerGroup = new SentimentConsumerGroup(
-    	    		"10.14.122.195:2181", "chatConsumer", "analysis");
+    	    		"10.14.122.205:2181", "chatConsumer", "analysis");
     		init();
     	}
     	return sentimentConsumerGroup;

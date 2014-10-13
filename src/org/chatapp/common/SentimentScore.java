@@ -7,7 +7,9 @@ public class SentimentScore implements Serializable{
    
 	private static final long serialVersionUID = 1L;
 
-	private String user;
+	private String from;
+	
+	private String to;
 
     private double happiness;
 
@@ -22,20 +24,36 @@ public class SentimentScore implements Serializable{
     private double fear;
 
     /**
-     * @return the user
+     * @return the from
      */
-    public String getUser() {
-        return user;
+    public String getFrom() {
+        return from;
     }
 
     /**
-     * @param user
-     *            the user to set
+     * @param from
+     *            the from to set
      */
-    public void setUser(String user) {
-        this.user = user;
+    public void setFrom(String from) {
+    	this.from = from;
+    }
+    
+    /**
+     * @param to
+     *            the to to set
+     */
+    public void setTo(String to) {
+        this.to = to;
     }
 
+    /**
+     * @return the to
+     */
+    public String getTo() {
+        return to;
+    }
+
+    
     /**
      * @return the happiness
      */
@@ -157,8 +175,20 @@ public class SentimentScore implements Serializable{
 			maxEmotion = "surprise";
 		}
 		
-					
-		return user + "#" 
+		//Neutral if happy is max and is less than 70 
+		
+				if(maxEmotion.equalsIgnoreCase("happiness"))
+				{
+					if(maxScore < 0.75) {
+						maxEmotion = "neutral";
+					}
+				}
+				else{
+					if(maxScore < 0.60) {
+						maxEmotion = "neutral";
+					}
+				}
+		return from + "#" 
 		+ maxEmotion+"#"
 		+"happiness:" + happiness
 		+"|anger:" + anger
@@ -170,7 +200,7 @@ public class SentimentScore implements Serializable{
 
 	public SentimentScore addScore(SentimentScore score) {
 		SentimentScore addedScore = new SentimentScore();
-		addedScore.user = this.user;
+		addedScore.from = this.from;
 		addedScore.happiness = this.happiness + score.happiness;
 		addedScore.anger = this.anger + score.anger;
 		addedScore.disgust = this.disgust + score.disgust;

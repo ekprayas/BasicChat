@@ -40,9 +40,9 @@ public class MessageEventHandler implements  Runnable {
 
     public void initProducer() {
         Properties props = new Properties();
-        props.put("zk.connect", "10.14.122.195:2181");
+        props.put("zk.connect", "10.14.122.205:2181");
         props.put("metadata.broker.list",
-        		"10.14.122.195:9092");
+        		"10.14.122.205:9092");
         props.put("serializer.class",
         		"kafka.serializer.StringEncoder");
         props.put("partitioner.class", "org.chatapp.producer.RandomPartitioner");

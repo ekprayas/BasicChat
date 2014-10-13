@@ -326,8 +326,59 @@ var updateScore = function() {
 	$('.onlineUsersUL > li > a').each(function () {
 		var userLoggedout = this.innerText;
 		getUserScore(userLoggedout);
+		getPairScore(userLoggedout);
 	});
 };
 
-var interval = 1000 * 5 * 1; // where X is your every X minutes
+var interval = 1000 * 1 * 1; // where X is your every X minutes 1000 * 1 sec * 1
 setInterval(updateScore, interval);
+
+
+
+
+/** 
+ * Send Username and get score.  
+ * the callback should take a string, 
+ * which is the latest version of the model
+ * 
+ *  This method is called on login and it will register user to server
+ */
+var getPairScore = function(from){
+	var params = escape("from")+ "=" + escape(from);
+	params = params + "&" + escape("to") + "=" + escape($("#userName").val());
+	var url = "/BasicChatApplication/SentimentScoreServlet?" + params;
+	$.ajax({
+		url: url,
+		type: 'GET',
+		success: function(data) {
+			//called when successful
+			var messages = data.split("#");
+		
+				var userLoggedout =messages[1];
+				
+		
+					var sourcestr = "../images/emotions/";
+					sourcestr = sourcestr.concat(messages[2]);
+					sourcestr = sourcestr.concat(".png");
+					var emotionArr = messages[3].split("|");
+					var spanMsg = "<b><font color=\"blue\">" +messages[2] + "</font></b>" +
+					"<br>" + emotionArr[0] +
+					"<br>" + emotionArr[1] +
+					"<br>" + emotionArr[2] +
+					"<br>" + emotionArr[3] +
+					"<br>" + emotionArr[4] +
+					"<br>" + emotionArr[5];
+					var atext = "<img class=\"onlineGreen\" src='"+sourcestr+
+							"' title='"+ messages[2] + "'><span>"+ spanMsg +"</span>";
+					
+					//var atext = "&lt;img class=\"onlineGreen\" src='"+sourcestr+"' title='"+messages[3]+"' &gt;&lt;span&gt;	"+messages[3]+"&lt;/span&gt";
+					$("#smiley_"+from).html(atext);
+					//this.setAttribute("src",sourcestr);
+			
+		},
+		error: function(e) {
+			//called when there is an error
+			console.log(e.message);
+		}
+	});
+};

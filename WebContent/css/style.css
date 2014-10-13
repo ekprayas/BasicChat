@@ -86,7 +86,7 @@ margin-top: 1px;
 .onlineGreen{
 	margin-top: 5px;
 	float:left;
-	width:15%;
+	width:12%;
 }
 
 .onlineUsersDIV {
@@ -164,4 +164,10 @@ width: 262px;
 .highlightColor{
 	background-color:#ff8000;
 }
+
+
+
+  #tooltip1 { position: relative; }
+#tooltip1 a span { display: none; color: #F6CEE3; }
+#tooltip1 a:hover span { display: block; position: absolute; width: 250px; background: #aaa url(images/horses200x50.jpg); height: 150px; left: 100px; top: -10px; color: #FFFFFF; padding: 0 5px; }
 

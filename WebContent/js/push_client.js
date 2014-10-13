@@ -91,7 +91,9 @@ function renderChatDiv(userName){
 	
 	//create chat window where id base div is user name.
 	var chatWindow = "<div id='"+userName+"' class='chatDiv'>"+
-	"<div class='chatDivTitle'>"+userName+" <a href='#' style='float:right' class='chatClose'>close</a></div>"+
+	"<div class='chatDivTitle'>"+userName+" <p id=\"tooltip1\">" +
+ " <a href='#' class='smiley' id='smiley_"+userName+"'></a></p>"+
+  " <a href='#' style='float:right' class='chatClose'>close</a></div>"+
 	"<textarea rows='12' id='chatHistory' class='chatHistory' readonly='true' cols='30' ></textarea><br>"+
 	"<textarea rows='3' id='chatBox' class='chatBox' cols='30' ></textarea>"+
 	"</div>";
